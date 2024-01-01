@@ -1,0 +1,351 @@
+/* GLOBAL
+=================================== */
+body {
+  color: #3e4553;
+  font-family: "Montserrat", "Helvetica", Aria regular, sans-serif;
+}
+
+/* Color */
+.blue {
+  color: #034ea2 !important;
+}
+
+.dark-blue {
+  color: #000091 !important;
+}
+
+.title-grey {
+  color: #161616 !important;
+}
+
+/* SPACING */
+.mt-40 {
+  margin-top:40px;
+}
+
+.mt-16 {
+  margin-top: 16px;
+}
+
+.mt-12 {
+  margin-top: 12px;
+}
+
+/* BUTTONS */
+a.button,
+a.button-link {
+  padding: 18px 24px;
+  display: table;
+  border-radius: 4px;
+  color: #fff;
+  background-color: #034ea2;
+  font-size: 2em;
+  line-height: 1.4;
+  font-weight: 700;
+  text-align: center;
+  text-decoration: none;
+  transition: background-color 0.2s linear, text-decoration 0.2s linear;
+}
+
+a.button-link {
+  padding: 0;
+  font-size: 2.8em;
+  text-decoration: underline;
+  transition: none;
+  background: transparent;
+}
+
+a.button:hover {
+  background-color: #2183f0;
+  text-decoration: underline;
+}
+
+/* DUPLICATE CONTENT */
+.mobile {
+  display: initial;
+}
+
+.desktop {
+  display: none;
+}
+
+@media (min-width: 992px) {
+  .mobile {
+    display: none;
+  }
+
+  .desktop {
+    display: initial;
+  }
+}
+
+/* STRUCTURE */
+
+#usagers section {
+  padding: 28px 0;
+}
+
+#usagers section > div {
+  padding: 0 16px;
+}
+
+#usagers h1 {
+  margin-bottom: 16px;
+  font-size: 4em;
+  line-height: 1.05;
+  font-weight: 800;
+}
+
+#usagers h1 strong {
+  color: #034ea2;
+  font-weight: 800;
+}
+
+#usagers h2 {
+  color: #034ea2;
+  font-size: 3.2em;
+  line-height: 1.05;
+  font-weight: 800;
+  margin-bottom: 48px;
+}
+
+#usagers p {
+  font-size: 2em;
+  line-height: 1.3em;
+  font-weight: 500;
+}
+
+#usagers section.fullwidth-section {
+  width: 100%;
+  min-width: 100%;
+  max-width: 100%;
+}
+
+#usagers section,
+#usagers section.fullwidth-section .section-outter {
+  max-width: 992px;
+  margin: 0 auto;
+}
+
+#usagers section.background-with-image {
+  position: relative;
+  overflow: hidden;
+}
+
+#usagers section.background-with-image::after {
+  content: " ";
+  position: absolute;
+  display: inline-block;
+  background-repeat: no-repeat;
+  background-origin: content-box;
+  top: 0;
+  left: 0;
+}
+
+#usagers section.blue-gradient-background {
+  color: #fff;
+  background: rgb(2, 0, 36);
+  background: linear-gradient(300deg, rgba(2, 0, 36, 1) 0%, rgba(0, 0, 146, 1) 31%, rgba(0, 0, 145, 1) 100%);
+}
+
+#usagers .content.mt-60 {
+  margin-top:60px;
+}
+
+#usagers .content h2 {
+  font-size: 34px;
+  margin-bottom: 16px;
+}
+
+#usagers .content p,
+#usagers .content p a {
+  color: #3e4553;
+  font-size: 24px;
+}
+
+#usagers section.content {
+  padding: 0 0 40px 0;
+}
+
+/* *************************************************************
+
+ Alert Card
+
+************************************************************* */
+.card-alert {
+  padding: 16px;
+  color: #3e4553;
+  font-size: 0.8em;
+  border-radius: 4px;
+  line-height: 1.2em;
+  border: 1px solid #f41b1f;
+  background: rgba(225, 0, 15, 0.1);
+}
+
+/* *************************************************************
+
+ Info Card
+
+************************************************************* */
+#usagers #mcf-info-alert {
+  background: #E5EDF5;
+  padding-top: 24px;
+  padding-bottom: 24px;
+}
+
+#usagers #mcf-info-alert p {
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.card-info a,
+.card-alert a {
+  color: #3e4553;
+}
+
+.card-info-title,
+.card-alert-title,
+.card-content {
+  margin-bottom: 8px;
+}
+
+/* *************************************************************
+
+ Fraud block
+
+************************************************************* */
+#usagers #fraud-info {
+  padding-bottom: 80px;
+}
+
+#usagers #fraud-info .section-inner {
+  padding: 16px;
+  background-color: #f1f7ff;
+  border-radius: 8px;
+}
+
+#usagers #fraud-info .section-inner h2 {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+
+#usagers #fraud-info .section-inner p {
+  font-size: 16px;
+  line-height: 24px;
+  padding-bottom: 16px;
+}
+
+#usagers #fraud-info .section-inner a {
+  font-size: 16px;
+  line-height: 29px;
+  color:#3a3a3a;
+}
+
+#usagers #fraud-info #consultation-aide {
+  font-size: 18px;
+}
+
+/* *************************************************************
+
+ Partner block
+
+************************************************************* */
+#partner-info .partner {
+  margin-top: 16px;
+}
+
+.partner {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid #dddddd;
+}
+
+.partner .logo {
+  padding: 16px 0;
+}
+
+.partner .logo img {
+  width: 150px;
+}
+
+.partner .info {
+  padding: 16px 0;
+}
+
+.coming-soon {
+  font-size: 26px;
+  margin-top: 40px;
+  margin-bottom: 8px;
+  font-weight: 700;
+}
+
+#usagers .partner .info p,
+#usagers .partner .info p a {
+  font-size: 18px;
+  line-height: 28px;
+}
+
+#usagers .partner .info p a:hover {
+  text-decoration: underline;
+}
+
+/* *************************************************************
+
+ Media Queries
+
+************************************************************* */
+@media (min-width: 768px) {
+  #usagers section {
+    padding: 40px 0;
+  }
+
+  #usagers section > div {
+    padding: 0 32px;
+  }
+
+  #usagers h1 {
+    font-size: 4.8em;
+  }
+
+  #usagers h2 {
+    font-size: 5em;
+  }
+
+  #usagers p {
+    font-size: 2.4em;
+  }
+
+  #usagers section.background-with-image::after {
+    left: 50%;
+  }
+
+  #usagers #fraud-info .section-inner,
+  #usagers #enquete-site-franceconnect .section-inner {
+    padding: 32px;
+  }
+
+  #usagers #fraud-info .section-inner h2 {
+    font-size: 34px;
+    font-weight: 700;
+    margin-bottom: 16px;
+  }
+
+  .partner {
+    flex-direction: row;
+  }
+
+  .partner .info {
+    margin-left: 118px;
+  }
+}
+
+@media (min-width: 992px) {
+  #usagers section > div {
+    padding: 0;
+  }
+
+  #usagers h1 {
+    font-size: 6em;
+  }
+}

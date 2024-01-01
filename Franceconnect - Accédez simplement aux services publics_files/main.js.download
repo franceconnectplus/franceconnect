@@ -1,0 +1,213 @@
+// -------
+// Header component
+// -------
+
+const wrappers = document.querySelectorAll(".wrapper");
+const menu = document.querySelector("#navbar");
+const links = document.querySelectorAll("#navbar a");
+const [header] = document.getElementsByTagName('header');
+const MOBILE_BREAKPOINT = 768
+// -------
+// Main JS
+// -------
+
+// -------
+// Link Observer JS
+// -------
+const OPTIONS = {
+  rootMargin: "0px 0px 0px 0px",
+};
+const onIntersection = ([section], observer) => {
+  if (section.isIntersecting) {
+    observer.unfocus(section.target);
+  }
+};
+const scrollObserver = new IntersectionObserver(onIntersection, OPTIONS);
+
+scrollObserver.hasFocus = function () {
+  return !!this.done;
+};
+scrollObserver.focus = function (target, done) {
+  this.done = done;
+  this.observe(target);
+};
+scrollObserver.unfocus = function (id) {
+  this.disconnect();
+  const callback = this.done;
+  this.done = null;
+  if (callback) {
+    callback(id);
+  }
+};
+
+
+/**
+ * Scroll horizontally the menu on mobile
+ * @param {*} link
+ */
+function mobileFocusNavbar(link){
+  const linkOffsetLeft = link.offsetLeft - (link.offsetWidth/2)
+  menu.scrollTo({
+    left: linkOffsetLeft,
+    behavior: "smooth",
+  });
+}
+
+
+/**
+ * Menu handler
+ * @param {*} links
+ * @param {*} linkId
+ */
+function focusMenu(links, linkId) {
+  links.forEach((link) => {
+    // remove the #
+    const id = link.hash.substring(1);
+    const currentPage = window.location.pathname.substring(1) === link.href.split('/').slice(-1).toString();
+
+    if (linkId === id || currentPage) {
+
+      link.classList.add("focus");
+        if(window.innerWidth <= MOBILE_BREAKPOINT) {
+          mobileFocusNavbar(link)
+        }
+    } else {
+      link.classList.remove("focus");
+    }
+  });
+}
+
+function clearFocus() {
+  const focused = document.querySelectorAll(".nav-link.focus");
+  focused.forEach((link) => {
+    link.classList.remove("focus");
+  });
+}
+
+/**
+ *
+ * @param {*} links
+ */
+function setupScrollTo(links) {
+  const menuScroll = (link) => {
+    link.addEventListener("click", (event) => {
+      const { hash } = event.target;
+      const isValidHash = hash.charAt(0) === "#";
+      const scrollTarget = document.querySelector(hash);
+
+      const canScrollToAnchor = isValidHash && scrollTarget;
+      if (!canScrollToAnchor) {
+        return
+      }
+
+      event.preventDefault();
+      clearFocus();
+      link.classList.add("focus-forced");
+      scrollObserver.focus(scrollTarget, (destination) => {
+        link.classList.remove("focus-forced");
+        history.pushState({}, "", hash);
+        focusMenu(links, destination.id);
+      });
+
+      const top = scrollTarget.offsetTop - header.offsetHeight;
+      window.scrollTo({
+        top,
+        behavior: "smooth",
+      });
+    });
+  };
+
+  links.forEach((link) => menuScroll(link));
+}
+/**
+ * Handle the focus on links elements
+ * @param {*} links
+ * @param {*} sections
+ */
+function focusScroll(links, sections) {
+  // init ratio tracker to zero
+  const sectionsValues = Array.from(sections).reduce(
+    (acc, section) => ({ ...acc, [section.id]: 0 }),
+    {}
+  );
+  const onVisibleSection = (sections) => {
+    // save changes of ratio for each section
+    sections.forEach(({ target, intersectionRatio }) => {
+      sectionsValues[target.id] = intersectionRatio;
+    });
+
+    if (!scrollObserver.hasFocus()) {
+      // find the section with the highest ratio
+      const [winner] = Object.entries(sectionsValues).sort(
+        ([, interRatioA], [, interRatioB]) => interRatioB - interRatioA
+      );
+
+      const [targetId] = winner;
+      focusMenu(links, targetId);
+    }
+  };
+
+  const sectionOptions = {
+    rootMargin: `0px 0px 0px 0px`,
+    // this thresholds track changes for section
+    threshold: [0, 0.25, 0.5, 0.75, 1],
+  };
+  const sectionObserver = new IntersectionObserver(
+    onVisibleSection,
+    sectionOptions
+  );
+  sections.forEach((section) => {
+    sectionObserver.observe(section);
+  });
+}
+
+
+window.onload = function () {
+  const sections = document.querySelectorAll("#usagers > section");
+  if (links.length) {
+    setupScrollTo(links);
+    if (sections.length) {
+      focusScroll(links, sections);
+    }
+  }
+
+  // initial position
+  const hash = location.hash;
+  if (!!hash) {
+    const target = document.querySelector(hash);
+    const top = target.offsetTop;
+    window.scrollTo({
+      top,
+      behavior: "smooth",
+    });
+  }
+};
+
+// Lazy Loading
+const images = document.querySelectorAll("[data-lz-src]");
+
+if (images.length > 0) {
+  lazyLoad();
+}
+
+function lazyLoad() {
+  const options = {
+    root: document.querySelector("body"),
+    rootMargin: "50% 0px 50% 0px",
+  };
+
+  function onIntersection(imageEntites) {
+    imageEntites.forEach(function (image) {
+      if (image.isIntersecting) {
+        observer.unobserve(image.target);
+        image.target.src = image.target.dataset.lzSrc;
+      }
+    });
+  }
+
+  const observer = new IntersectionObserver(onIntersection, options);
+
+  images.forEach(function (image) {
+    observer.observe(image);
+  });
+}
